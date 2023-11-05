@@ -4,6 +4,16 @@ kind: Namespace
 metadata:
   name: challenge-dev
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: challenge-stg
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: challenge-prod
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

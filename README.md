@@ -42,7 +42,11 @@ kubectl port-forward svc/hello-world 8080:80
 
 ## GitHub Actions Workflow
 
-## ArgoCD configuration
+## ArgoCD configuration and GitOps App
+Description:
+- "charts/" dir have the HELM chart base for applications
+- "manifests/" dir have the values files for each environment
+- ArgoCD policy is self-heal and auto-prune, the only source of truth is this Git repository
 
 Add HELM repository:
 ```
@@ -60,16 +64,30 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 ```
 Login to ArgoCD and add Git chart repository:
 ```
-argocd repo add https://github.com/rocajp/chart.git --type git
+argocd repo add https://github.com/rocajp/kantox-challenge-gitops --type git
 ```
 
-Create ArgoCD Project
+Create ArgoCD Projects
 ```
 argocd proj create dev --upsert -d https://kubernetes.default.svc,challenge-dev -s '*' --allow-cluster-resource Namespace
+argocd proj create stg --upsert -d https://kubernetes.default.svc,challenge-stg -s '*' --allow-cluster-resource Namespace
+argocd proj create prod --upsert -d https://kubernetes.default.svc,challenge-prod -s '*' --allow-cluster-resource Namespace
 ```
 
-Create ArgoCD hello-world Application
+Create ArgoCD hello-world Application in DEV
+```
+argocd app create hello-world-gitops-dev --project dev --dest-namespace challenge-dev --dest-server https://kubernetes.default.svc --sync-option CreateNamespace=true --sync-policy auto --self-heal --repo https://github.com/rocajp/kantox-challenge-gitops --path manifests/dev/  --upsert --values values.yaml
 ```
 
+Create ArgoCD hello-world Application in STG
 ```
+argocd app create hello-world-gitops-stg --project stg --dest-namespace challenge-stg --dest-server https://kubernetes.default.svc --sync-option CreateNamespace=true --sync-policy auto --self-heal --repo https://github.com/rocajp/kantox-challenge-gitops --path manifests/stg/  --upsert --values values.yaml
+```
+
+Create ArgoCD hello-world Application in PROD
+```
+argocd app create hello-world-gitops-prod --project prod --dest-namespace challenge-prod --dest-server https://kubernetes.default.svc --sync-option CreateNamespace=true --sync-policy auto --self-heal --repo https://github.com/rocajp/kantox-challenge-gitops --path manifests/prod/  --upsert --values values.yaml
+```
+`
+
 
