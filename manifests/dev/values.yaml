@@ -1,33 +1,19 @@
-replicaCount: 1
-
-image:
-  repository: rocajp/hello-world
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.0.0"
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: false
-
-service:
-  type: ClusterIP
-  port: 80
-
-ingress:
-  enabled: false
-
-resources: {}
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
+application:
+  replicaCount: 1
+  image:
+    repository: rocajp/hello-world
+    pullPolicy: IfNotPresent
+    tag: "1.0.0"
+  serviceAccount:
+    create: false
+  service:
+    type: ClusterIP
+    port: 80
+  ingress:
+    enabled: false
+  resources: {}
+  autoscaling:
+    enabled: false
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
