@@ -39,3 +39,17 @@ kubectl apply -f hello-world-k8s/
 kubectl port-forward svc/hello-world 8080:80
 ```
 *Then visit localhost:8080 in your browser*
+
+## GitHub Actions Workflow
+
+## ArgoCD configuration
+
+Add HELM repository:
+```
+helm repo add argo https://argoproj.github.io/argo-helm --force-update
+```
+
+Install ArgoCD:
+```
+helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace -f values.yaml
+```
