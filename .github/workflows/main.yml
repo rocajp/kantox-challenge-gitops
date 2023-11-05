@@ -9,7 +9,7 @@ env:
   DOCKER_USERNAME: 'rocajp'
   # Should be a GH Secret (only for challenge)
   DOCKER_PASSWORD: 'dckr_pat_4WYx03tGT_dWgI_gcY2jnNa7EUU'
-  IMAGE_NAME: 'hello-world'
+  IMAGE_NAME: 'rocajp/hello-world'
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
