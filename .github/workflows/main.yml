@@ -20,10 +20,9 @@ jobs:
     - name: Log into Docker Hub registry
       run: echo ${DOCKER_PASSWORD} | docker login ${DOCKER_REGISTRY} -u ${DOCKER_USERNAME} --password-stdin
     
-    - uses: cperezabo/setup-git-mkver@v1
+    - uses: cperezabo/setup-git-mkver@v1.2.0
       with:
-        # Force specific git-mkver version. Default: latest
-        version: "1.2.0"
+        version: "latest"
     
     - name: Build and tag Docker image
       run: |
