@@ -1,11 +1,13 @@
-name: Deploy Container
+name: Container image build
 on:
   push:
     branches:
       - main
 env:
   DOCKER_REGISTRY: 'docker.io'
+  # Should be a GH Secret (only for challenge)
   DOCKER_USERNAME: 'rocajp'
+  # Should be a GH Secret (only for challenge)
   DOCKER_PASSWORD: 'dckr_pat_4WYx03tGT_dWgI_gcY2jnNa7EUU'
   IMAGE_NAME: 'hello-world'
 jobs:
@@ -17,27 +19,28 @@ jobs:
 
     - name: Log into Docker Hub registry
       run: echo ${DOCKER_PASSWORD} | docker login ${DOCKER_REGISTRY} -u ${DOCKER_USERNAME} --password-stdin
-        
+    
+    - uses: cperezabo/setup-git-mkver@v1
+      with:
+        # Force specific git-mkver version. Default: latest
+        version: "1.2.0"
+    
     - name: Build and tag Docker image
       run: |
         docker build -t $IMAGE_NAME:latest .
-        docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:$(git describe --tags --abbrev=0)
+        docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:$(git mkver next)
 
     - name: Push Docker image
       run: |
         docker push ${IMAGE_NAME}:latest
-        docker push ${IMAGE_NAME}:$(git describe --tags --abbrev=0)
+        docker push ${IMAGE_NAME}:$(git mkver next)
 
     - name: Update Semantic Version
       run: |
-        git tag -a $(git describe --tags --abbrev=0) -m "Version $(git describe --tags --abbrev=0)"
+        git mkver tag
         git push --follow-tags
-
-    #- name: Deploy to Kubernetes (if needed)
-      # Add your Kubernetes deployment steps here
-      # You can use kubectl to apply your updated manifests
 
     - name: Clean up for self-hosted runner in VM
       run: |
         docker image rm ${IMAGE_NAME}:latest
-        docker image rm ${IMAGE_NAME}:$(git describe --tags --abbrev=0)
+        docker image rm ${IMAGE_NAME}:$(git mkver next)
