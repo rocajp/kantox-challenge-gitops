@@ -36,6 +36,8 @@ jobs:
 
     - name: Update Semantic Version
       run: |
+        git config --global user.email "rocajp@gmail.com"
+        git config --global user.name "Juan Pablo Roca"
         git mkver tag
         git push --follow-tags
 
