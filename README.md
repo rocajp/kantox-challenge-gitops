@@ -58,4 +58,8 @@ helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace -f value
 ```
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
+Login to ArgoCD and add Git chart repository:
+```
+argocd repo add https://github.com/rocajp/chart.git --type git
+```
 
