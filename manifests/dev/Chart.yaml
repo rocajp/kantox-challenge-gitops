@@ -7,4 +7,4 @@ name: appname
 dependencies:
 - name: chart
   version: "0.1.0"
-  repository: https://github.com/rocajp/chart.git
+  repository: https://github.com/rocajp/chart
