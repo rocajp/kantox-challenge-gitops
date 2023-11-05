@@ -30,8 +30,6 @@ kubectl cluster-info
 
 # Challenge solution
 ## Deploy K8s manifests
-For this exercise, I tag and push rancher hello-world image in mi own docker.io repository with tag 1.0.0
-
 To deploy the app and service:
 ```
 kubectl apply -f hello-world-k8s/
