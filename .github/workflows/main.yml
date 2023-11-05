@@ -27,12 +27,12 @@ jobs:
     - name: Build and tag Docker image
       run: |
         docker build -t $IMAGE_NAME:latest .
-        docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:$(git mkver next)
+        docker tag $IMAGE_NAME:latest $IMAGE_NAME:$(git mkver next)
 
     - name: Push Docker image
       run: |
-        docker push ${IMAGE_NAME}:latest
-        docker push ${IMAGE_NAME}:$(git mkver next)
+        docker push $IMAGE_NAME:latest
+        docker push $IMAGE_NAME:$(git mkver next)
 
     - name: Update Semantic Version
       run: |
@@ -41,5 +41,5 @@ jobs:
 
     - name: Clean up for self-hosted runner in VM
       run: |
-        docker image rm ${IMAGE_NAME}:latest
-        docker image rm ${IMAGE_NAME}:$(git mkver next)
+        docker image rm $IMAGE_NAME:latest
+        docker image rm $IMAGE_NAME:$(git mkver next)
