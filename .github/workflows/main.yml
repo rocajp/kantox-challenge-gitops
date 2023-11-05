@@ -21,16 +21,16 @@ jobs:
     - name: Build and tag Docker image
       run: |
         docker build -t $IMAGE_NAME:latest .
-        docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:$(git describe --tags --abbrev=0 --exact-match)
+        docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:$(git describe --tags --abbrev=0)
 
     - name: Push Docker image
       run: |
         docker push ${IMAGE_NAME}:latest
-        docker push ${IMAGE_NAME}:$(git describe --tags --abbrev=0 --exact-match)
+        docker push ${IMAGE_NAME}:$(git describe --tags --abbrev=0)
 
     - name: Update Semantic Version
       run: |
-        git tag -a $(git describe --tags --abbrev=0 --exact-match) -m "Version $(git describe --tags --abbrev=0 --exact-match)"
+        git tag -a $(git describe --tags --abbrev=0) -m "Version $(git describe --tags --abbrev=0)"
         git push --follow-tags
 
     #- name: Deploy to Kubernetes (if needed)
@@ -40,4 +40,4 @@ jobs:
     - name: Clean up for self-hosted runner in VM
       run: |
         docker image rm ${IMAGE_NAME}:latest
-        docker image rm ${IMAGE_NAME}:$(git describe --tags --abbrev=0 --exact-match)
+        docker image rm ${IMAGE_NAME}:$(git describe --tags --abbrev=0)
