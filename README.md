@@ -63,3 +63,13 @@ Login to ArgoCD and add Git chart repository:
 argocd repo add https://github.com/rocajp/chart.git --type git
 ```
 
+Create ArgoCD Project
+```
+argocd proj create dev --upsert -d https://kubernetes.default.svc,challenge-dev -s '*' --allow-cluster-resource Namespace
+```
+
+Create ArgoCD hello-world Application
+```
+
+```
+
