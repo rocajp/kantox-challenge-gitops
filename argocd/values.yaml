@@ -1,0 +1,24 @@
+createClusterRoles: true
+crds:
+  install: true
+  keep: true
+global:
+  image:
+    repository: quay.io/argoproj/argocd
+    tag: ""
+    imagePullPolicy: IfNotPresent
+  logging:
+    format: text
+    level: info
+configs:
+  cm:
+    create: true
+    admin.enabled: true
+    ui.bannerpermanent: 'true'
+    ui.bannerposition: bottom
+    ui.bannercontent: ArgoCD for Kantox Challenge
+  params:
+    server.insecure: true
+server:
+  ingress:
+    enabled: true
