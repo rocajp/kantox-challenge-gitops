@@ -1,0 +1,19 @@
+application:
+  replicaCount: 1
+  image:
+    repository: rocajp/hello-world
+    pullPolicy: IfNotPresent
+    tag: "0.1.0"
+  serviceAccount:
+    create: false
+  service:
+    type: ClusterIP
+    port: 80
+  ingress:
+    enabled: false
+  resources: {}
+  autoscaling:
+    enabled: false
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
